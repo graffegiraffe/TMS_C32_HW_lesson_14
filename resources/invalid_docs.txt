@@ -1,0 +1,43 @@
+docnum1234567890 ---- Invalid length
+docnum12345678901 ---- Invalid length
+docnum12!456789 ---- Contains invalid characters
+contracta@c1234 ---- Contains invalid characters
+docnum123 ---- Invalid length
+contractabc123 ---- Invalid length
+contruct12345 ---- Invalid length
+docnem2345678 ---- Invalid length
+contract1111111111 ---- Invalid length
+docnum2222222222 ---- Invalid length
+contract9876543210 ---- Invalid length
+docnum12345abcde ---- Invalid length
+contract0000000000 ---- Invalid length
+docnum9876543210 ---- Invalid length
+contract1112131415 ---- Invalid length
+docnum7777777777 ---- Invalid length
+contract9999999999 ---- Invalid length
+docnumffffffffffff ---- Invalid length
+contract1234!@#$% ---- Invalid length
+docu1234567890 ---- Invalid length
+contr0000000000 ---- Invalid prefix
+docnum1234docnum ---- Invalid length
+contractdocs1234 ---- Invalid length
+docnum0000000000 ---- Invalid length
+contract3333333333 ---- Invalid length
+docnumaaaabbbbcccc ---- Invalid length
+contractabcd1234 ---- Invalid length
+docnum____0000000 ---- Invalid length
+contract1123581321 ---- Invalid length
+docnum1357924680 ---- Invalid length
+contract2468135790 ---- Invalid length
+contract1357924680 ---- Invalid length
+docnum2468135790 ---- Invalid length
+contract0000abcd00 ---- Invalid length
+docnumabcd00000000 ---- Invalid length
+contract1234567890doc ---- Invalid length
+docnum12345678901 ---- Invalid length
+docnum12!456789 ---- Contains invalid characters
+contracta@c1234 ---- Contains invalid characters
+docnum123 ---- Invalid length
+contractabc123 ---- Invalid length
+contruct12345 ---- Invalid length
+docnem2345678 ---- Invalid length
