@@ -1,21 +1,21 @@
 package main.java.by.rublevskaya.model.validation;
+import main.java.by.rublevskaya.model.exception.InvalidDocumentException;
 
 import java.util.regex.Pattern;
 
 public class ValidationUtil {
-    public static String validateDocumentNumber(String docNumber) {
+
+    public static void validateDocumentNumber(String docNumber) throws InvalidDocumentException {
         if (docNumber.length() != 15) {
-            return "Invalid length";
+            throw new InvalidDocumentException("Invalid length");
         }
 
         if (!Pattern.matches("^[a-zA-Z0-9]+$", docNumber)) {
-            return "Contains invalid characters";
+            throw new InvalidDocumentException("Contains invalid characters");
         }
 
         if (!docNumber.startsWith("docnum") && !docNumber.startsWith("contract")) {
-            return "Invalid prefix";
+            throw new InvalidDocumentException("Invalid prefix");
         }
-
-        return null;
     }
 }

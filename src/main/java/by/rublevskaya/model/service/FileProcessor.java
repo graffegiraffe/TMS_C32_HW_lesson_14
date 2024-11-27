@@ -1,5 +1,6 @@
 package main.java.by.rublevskaya.model.service;
 
+import main.java.by.rublevskaya.model.exception.InvalidDocumentException;
 import main.java.by.rublevskaya.model.validation.ValidationUtil;
 
 import java.io.BufferedReader;
@@ -11,7 +12,7 @@ import java.nio.file.Path;
 public class FileProcessor {
 
     public void processFile(Path inputPath) {
-        Path parentDir = inputPath.getParent();//папка родителя
+        Path parentDir = inputPath.getParent();
         Path docnumReportPath = resolvePath(parentDir, "valid_docnums.txt");
         Path contractReportPath = resolvePath(parentDir, "valid_contracts.txt");
         Path invalidReportPath = resolvePath(parentDir, "invalid_docs.txt");
@@ -21,7 +22,7 @@ public class FileProcessor {
              BufferedWriter contractWriter = Files.newBufferedWriter(contractReportPath);
              BufferedWriter invalidWriter = Files.newBufferedWriter(invalidReportPath)) {
 
-             processLines(reader, docnumWriter, contractWriter, invalidWriter);
+            processLines(reader, docnumWriter, contractWriter, invalidWriter);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -35,28 +36,27 @@ public class FileProcessor {
     private void processLines(BufferedReader reader, BufferedWriter docnumWriter, BufferedWriter contractWriter, BufferedWriter invalidWriter) throws IOException {
         String line;
         while ((line = reader.readLine()) != null) {
-            line = line.trim();//удаление пробелов
+            line = line.trim();
             if (line.isEmpty()) {
                 continue;
             }
-            String validationMessage = ValidationUtil.validateDocumentNumber(line);
-            writeLine(line, validationMessage, docnumWriter, contractWriter, invalidWriter);
+            try {
+                ValidationUtil.validateDocumentNumber(line);
+                writeLine(line, docnumWriter, contractWriter);
+            } catch (InvalidDocumentException e) {
+                invalidWriter.write(line + " ---- " + e.getMessage());
+                invalidWriter.newLine();
+            }
         }
     }
 
-    private void writeLine(String line, String validationMessage, BufferedWriter docnumWriter, BufferedWriter contractWriter, BufferedWriter invalidWriter) throws IOException {
-        if (validationMessage == null) {
-            if (line.startsWith("docnum")) {
-                docnumWriter.write(line);
-                docnumWriter.newLine();
-            } else if (line.startsWith("contract")) {
-                contractWriter.write(line);
-                contractWriter.newLine();
-            }
-        } else {
-            invalidWriter.write(line + " ---- " + validationMessage);
-            invalidWriter.newLine();
+    private void writeLine(String line, BufferedWriter docnumWriter, BufferedWriter contractWriter) throws IOException {
+        if (line.startsWith("docnum")) {
+            docnumWriter.write(line);
+            docnumWriter.newLine();
+        } else if (line.startsWith("contract")) {
+            contractWriter.write(line);
+            contractWriter.newLine();
         }
     }
 }
-
